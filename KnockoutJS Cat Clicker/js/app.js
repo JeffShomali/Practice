@@ -1,7 +1,4 @@
-//(1) creat ViewModel is like document ready in jquery
-var ViewModel = function() {
-
-    //(3) example of model inside the ViewModel buf in functuality this is sperate
+var Cat = function() {
     this.clickCount = ko.observable(0); // this is like var clickCount = 0;
     this.name = ko.observable('Tabby');
     this.imgsrc = ko.observable('img/434164568_fea0ad4013_z.jpg');
@@ -20,22 +17,28 @@ var ViewModel = function() {
             title = 'Child';
         } else if (clicks < 40) {
             title = 'Teen';
-       } else {
+        } else {
             title = "Ninja";
-       }
-       return title;
+        }
+        return title;
 
-    } , this);
+    }, this);
 
 
-    this.incrementCounter = function() {
-        this.clickCount(this.clickCount() + 1); // its like var count = 0; count++;
 
-    };
+}
+
+
+var ViewModel = function() {
+
+     this.currentCat = ko.observable( new Cat() ); //Cat is not in view modeel anymore, is in currentCat observale
+
+     this.incrementCounter = function() {
+     this.currentCat().clickCount(this.currentCat().clickCount() + 1); // its like var count = 0; count++;
+
+     };
 
 }
 
 //(2) do applyBindings
-ko.applyBindings(new ViewModel()
-
-);
+ko.applyBindings(new ViewModel());

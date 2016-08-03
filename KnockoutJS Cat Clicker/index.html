@@ -10,19 +10,16 @@
     <ul id="cat-list"></ul>
     <div id="cat">
         <!--  (4) whith knockout we dont need ID but we need data-bind -->
-        <h2 data-bind="text: name"> </h2>
 
-
-        <!-- If binding  -->
-        <h3 data-bind="text: title"></h3>
-        <div data-bind="text: clickCount"> </div>
+        <h2 data-bind="text: currentCat().name"> </h2>
+        <h3 data-bind="text: currentCat().title"></h3>
+        <div data-bind="text: currentCat().clickCount"> </div>
         <!-- to use multiple binding we need to use comma -->
-        <img src="" alt="cute cat" data-bind="click: incrementCounter, attr:{src: imgsrc}">
+        <img src="" alt="cute cat" data-bind="click: incrementCounter, attr:{src: currentCat().imgsrc}">
 
         <div>
             <h3>Nicknames:</h3>
-            <ul data-bind="foreach: nicknames">
-
+            <ul data-bind="foreach: currentCat().nicknames">
                 <li data-bind="text: $data"></li>
             </ul>
         </div>
