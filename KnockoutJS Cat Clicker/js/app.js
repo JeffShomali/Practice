@@ -6,9 +6,9 @@ var ViewModel = function() {
     this.name = ko.observable('Tabby');
     this.imgsrc = ko.observable('img/434164568_fea0ad4013_z.jpg');
     this.imgAttribuation = ko.observable('https://www.flickr.com/photos/big');
-    this.nicknames = ko.observableArray(['Tabtab', 'T-Bone', 'Mr. T',
-         'Sir Tabbingford Hathaway Fuzzbutt Whiskerington Esquire of Tunashire'])
+    this.nicknames = ko.observableArray(['Coco', 'Bella', 'Mansour', 'Panbeh'])
 
+    // Title Binding
     this.title = ko.computed(function() {
         var title;
         var clicks = this.clickCount();
