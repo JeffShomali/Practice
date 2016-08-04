@@ -30,15 +30,15 @@ var Cat = function() {
 
 
 var ViewModel = function() {
+      var self = this; //self evertime refer to this ViewModel.  self.currentCat().clickCount means this.currentCat().clickCount()
 
      this.currentCat = ko.observable( new Cat() ); //Cat is not in view modeel anymore, is in currentCat observale
 
      this.incrementCounter = function() {
-     this.currentCat().clickCount(this.currentCat().clickCount() + 1); // its like var count = 0; count++;
+     self.currentCat().clickCount(self.currentCat().clickCount() + 1); // its like var count = 0; count++;
 
      };
-
-}
+};
 
 //(2) do applyBindings
 ko.applyBindings(new ViewModel());
