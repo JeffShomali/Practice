@@ -18,7 +18,7 @@ var initialCats = [
         name: 'Pashmak',
         imgSrc: 'img/22252709_010df3379e_z.jpg',
         imgAttribution: 'https://www.flickr.com/photos/kpjas/22252709',
-        nicknames: ['Khasste', ['Malang']]
+        nicknames: ['Khasste', 'Malang']
     },
     {
         clickCount: 0,
