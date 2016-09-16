@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     //Textfild
     @IBOutlet weak var searchBox: UITextField!
     
-    
     //Result View
     @IBOutlet weak var resultView: UIWebView!
     
@@ -31,12 +30,22 @@ class ViewController: UIViewController {
     //Listeners Here
     //Back Button
     @IBAction func back(sender: AnyObject) {
+         resultView.goBack()
     }
     //Go Button
     @IBAction func go(sender: AnyObject) {
+        //if searchbox is emty return nothing
+        if searchBox.text == "" {
+            return
+        }
+        // else hold as constant
+        guard let text:String = searchBox.text else {
+            return
+        }
     }
     //Forward Button
     @IBAction func forward(sender: AnyObject) {
+        resultView.goForward()
     }
     
 }
