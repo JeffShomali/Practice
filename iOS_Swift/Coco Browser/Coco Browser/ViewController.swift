@@ -9,6 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    //Textfild
+    @IBOutlet weak var searchBox: UITextField!
+    
+    
+    //Result View
+    @IBOutlet weak var resultView: UIWebView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +28,16 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    //Listeners Here
+    //Back Button
+    @IBAction func back(sender: AnyObject) {
+    }
+    //Go Button
+    @IBAction func go(sender: AnyObject) {
+    }
+    //Forward Button
+    @IBAction func forward(sender: AnyObject) {
+    }
+    
 }
 
