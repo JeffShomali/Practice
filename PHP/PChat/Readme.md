@@ -2,7 +2,7 @@
 This is simple Chat System built with PHP, MySQLI.
 
 ### Live
-Click [here]("http://jeffshomali.com/Projects/P7-PChat/") to run live
+Click [here](http://jeffshomali.com/Projects/P7-PChat/) to run live
 
 
 ### Result
