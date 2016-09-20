@@ -1,8 +1,17 @@
+
 <?php include 'database.php' ; ?>
 
 <?php
-     //Create select query
+
+ /**
+  * [preparing query variable]
+  * @var string
+  */
      $query = "SELECT * FROM shouts ORDER BY id DESC";
+     /**
+      * [Passing query connection from database.php and query into mysqli_query]
+      * @var [type]
+      */
      $shouts = mysqli_query($con, $query);
 
 ?>
@@ -26,7 +35,6 @@
                               <?php while( $row = mysqli_fetch_assoc($shouts) ) : ?>
                                    <li class="shout"> <span> <?php echo $row['time'] ?> - </span><strong><?php echo $row['user'] ?></strong>: <?php echo $row['message'] ?></li>
                               <?php endwhile; ?>
-
                          </ul>
                     </div>
 
