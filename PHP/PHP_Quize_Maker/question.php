@@ -1,11 +1,21 @@
 <?php include 'database.php'; ?>
+<?php session_start(); ?>
 
 <?php
 // Getting question number
-$number = (int)$_GET['n']; // (int) is type casting
+$number = (int) $_GET['n']; // (int) is type casting
 
 
-/**
+/*
+* Get total of question
+* and assign it to total variable
+*/
+$query = 'SELECT * FROM questions';
+//get results
+$results = $mysqli->query($query) or die($mysqli->error.__LINE__);
+$total = $results->num_rows;
+
+/*
  * Getting questuin
  */
 
@@ -18,7 +28,7 @@ $number = (int)$_GET['n']; // (int) is type casting
  $question = $result->fetch_assoc(); //get asssociative array of result
 
 
- /**
+ /*
   * Getting Choices
   */
 
@@ -28,7 +38,6 @@ $number = (int)$_GET['n']; // (int) is type casting
   $choices = $mysqli->query($query) or die($mysqli->error.__LINE__);
 
   //Assign a variable
-
 
 
 ?>
@@ -50,19 +59,20 @@ $number = (int)$_GET['n']; // (int) is type casting
 
     <main>
         <div class="container">
-            <div class="current">Question 1 of 5</div>
-            <p class="question"> <?php  echo $question['text'] ;?></p>
+            <div class="current">Question <?php echo $question['question_number']; ?> of <?php echo $total;?></div>
+            <p class="question"> <?php  echo $question['text'];?></p>
 
 
-            <form method="post" action="process.php">
+            <form method="POST" action="process.php">
                 <ul class="choices">
 
-                     <?php while($row = $choices->fetch_assoc()) : ?>
+                     <?php while ($row = $choices->fetch_assoc()) : ?>
                           <li><input name="choice" type="radio" value="<?php echo $row['id']; ?>" /> <?php echo $row['text'];?> </li>
                      <?php endwhile ?>
 
                 </ul>
-                <input type="submit" value="Submit" />
+                <input type="submit" name="submit" value="Submit" />
+                <input type="hidden" name="number" value="<?php echo $number; ?>">
             </form>
         </div>
     </main>
