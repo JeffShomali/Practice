@@ -1,4 +1,38 @@
-<!DOCTYPE html>
+<?php include 'database.php'; ?>
+
+<?php
+// Getting question number
+$number = (int)$_GET['n']; // (int) is type casting
+
+
+/**
+ * Getting questuin
+ */
+
+ $query = "SELECT * FROM `questions` WHERE question_number = $number ";
+
+ // Get the result
+ $result = $mysqli->query($query) or die($mysqli->error.__LINE__);
+
+ //Assign a variable
+ $question = $result->fetch_assoc(); //get asssociative array of result
+
+
+ /**
+  * Getting Choices
+  */
+
+  $query = "SELECT * FROM `choices` WHERE question_number = $number ";
+
+  // Get the result
+  $choices = $mysqli->query($query) or die($mysqli->error.__LINE__);
+
+  //Assign a variable
+
+
+
+?>
+
 <html>
 
 <head>
@@ -17,15 +51,16 @@
     <main>
         <div class="container">
             <div class="current">Question 1 of 5</div>
-            <p class="question"> What is PHP stant for? </p>
+            <p class="question"> <?php  echo $question['text'] ;?></p>
 
 
             <form method="post" action="process.php">
                 <ul class="choices">
-                    <li><input name="choice" type="radio" value="1" />PHP: Hypertext Preprocessor</li>
-                    <li><input name="choice" type="radio" value="1" />Private Home Page</li>
-                    <li><input name="choice" type="radio" value="1" />Personal Home Page</li>
-                    <li><input name="choice" type="radio" value="1" />Personal Hypertext Preprocessor</li>
+
+                     <?php while($row = $choices->fetch_assoc()) : ?>
+                          <li><input name="choice" type="radio" value="<?php echo $row['id']; ?>" /> <?php echo $row['text'];?> </li>
+                     <?php endwhile ?>
+
                 </ul>
                 <input type="submit" value="Submit" />
             </form>
