@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Welcome</title>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div id="app"> </div>
+
+
+
+
+
+
+
+
+
+    <script type="text/babel">
+        // Creating Navbar Component // render is required function in react Component
+        // return can only return one element and all the other in that //<div></div> <ul></ul> not works it should return only one tag DIV or UL
+
+         var Navbar = React.createClass({
+              render: function() {
+               return (
+                         <div>
+                              <nav className="navbar navbar-fixed-top navbar-inverse">
+                                  <div className="container">
+                                      <div className="navbar-header">
+                                          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                           <span className="sr-only">Toggle navigation</span>
+                                           <span className="icon-bar"></span>
+                                           <span className="icon-bar"></span>
+                                           <span className="icon-bar"></span>
+                                        </button>
+                                          <a className="navbar-brand" href="#">My Website</a>
+                                      </div>
+                                      <div id="navbar" className="collapse navbar-collapse">
+                                          <ul className="nav navbar-nav">
+                                             <li className="active"><a href="#">Home</a></li>
+                                             <li><a href="#about">About</a></li>
+                                             <li><a href="#contact">Contact</a></li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </nav>
+                         </div>
+                      )
+          }
+     });
+
+
+     // Jumbotron Component
+     var Jumbotron = React.createClass({
+          render: function(){
+               return(
+                    <div className="container">
+                         <div className="jumbotron">
+                             <h1>Hello, world!</h1>
+                             <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
+                         </div>
+                     </div>
+               )
+          }
+     });
+
+     // Homepage component
+     var PageHome = React.createClass({
+          render: function(){
+               return(
+                    <div className="container">
+                         <div className="row">
+                              Main Content
+                         </div>
+                    </div>
+               )
+          }
+     });
+
+     // Footer component
+     var Footer = React.createClass({
+          render: function(){
+               return(
+                    <div className="container">
+                         <hr />
+                         <footer>
+                             <p>&copy; 2016 ReactBootstrap, Inc.</p>
+                         </footer>
+                    </div>
+               )
+          }
+     });
+
+     // Main App Component
+     var App = React.createClass({
+          render: function(){
+               return(
+                    <div>
+                    <Navbar />
+                    <Jumbotron />
+                    <PageHome />
+                    <Footer />
+                    </div>
+               )
+          }
+     });
+
+
+
+
+
+            ReactDOM.render(
+                  <App />,
+                   document.getElementById('app')
+               );
+    </script>
+</body>
+
+</html>
