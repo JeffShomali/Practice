@@ -1,0 +1,13 @@
+1) install webpack globally
+     npm install webpack -g
+2) install webpack devserver globbaly
+     npm install webpack-dev-server -g
+3) creat package.json file in project
+     npm init
+4) add dependencies into package.json file
+     devDependencies and dependencies
+5) install dependencies
+     npm install
+
+*** Because wants to use webpack we need to create webpack config file on project root ***
+6) create webpack.config.js in root
