@@ -11,3 +11,6 @@
 
 *** Because wants to use webpack we need to create webpack config file on project root ***
 6) create webpack.config.js in root
+7) Test webpack
+     webpack-dev-server
+8) open  http://localhost:8080/app/ in browser
