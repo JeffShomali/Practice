@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
+import Search from './github/Search.jsx';
 import Profile from './github/Profile.jsx';
 
 class App extends Component{
@@ -57,6 +58,13 @@ class App extends Component{
      }
 
 
+     handleFormSubmit(username){
+          // alert(username);
+          this.setState({username: username}, function(){
+               this.getUserData();
+               this.getUserRepos();
+          })
+     }
 
      //Call
      componentDidMount(){
@@ -70,6 +78,8 @@ class App extends Component{
      render(){
           return(
                <div>
+                    <Search onFormSubmit = {this.handleFormSubmit.bind(this)} />
+                    <hr />
                     <Profile  {...this.state} />
                </div>
           )
