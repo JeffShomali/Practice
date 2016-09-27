@@ -10,10 +10,16 @@ class App extends Component{
                username: 'JeffShomali',
                userData: [],
                userRepos: [],
-               perPage: 5
+               perPage: 15
           }
      }
-     //Get user data form github
+
+     /**
+      * Get user data form github function
+      * responsible to retrieve data from github and pass it into userData
+      * with .bind(this)
+      */
+
      getUserData(){
           $.ajax({
                url: 'https://api.github.com/users/'+this.state.username+'?client_id=' +this.props.client_id + '&client_secret='+ this.props.clientSecret,
@@ -21,7 +27,7 @@ class App extends Component{
                cashe: false,
                success: function(data){
                     this.setState({userData: data});
-                    console.dir(data);
+                    // console.log(data);
                }.bind(this),
                error: function(xhr, status, err){
                     this.setState({username: null});
@@ -30,14 +36,41 @@ class App extends Component{
           });
      }
 
+     /**
+      * This is for getting user repositories
+      * sortted by perPage and created date
+      */
+     getUserRepos(){
+          $.ajax({
+               url: 'https://api.github.com/users/'+this.state.username+'/repos?per_page='+this.state.perPage+'&client_id=' +this.props.client_id + '&client_secret='+ this.props.clientSecret+'&sort=created',
+               dataType: 'json',
+               cashe: false,
+               success: function(data){
+                    this.setState({userRepos: data});
+                    console.log(data);
+               }.bind(this),
+               error: function(xhr, status, err){
+                    this.setState({username: null});
+                    alert(err);
+               }.bind(this)
+          });
+     }
+
+
+
+     //Call
      componentDidMount(){
      	this.getUserData();
+          this.getUserRepos();
      }
+
+
+
 
      render(){
           return(
                <div>
-               <Profile userData = {this.state.userData} />
+                    <Profile  {...this.state} />
                </div>
           )
      }
