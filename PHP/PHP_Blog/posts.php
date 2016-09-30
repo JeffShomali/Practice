@@ -1,27 +1,43 @@
 <?php include 'includes/header.php'; ?>
 
+
+
+<?php
+     //Create DB object
+     $db = new Database();
+     //Check URL for cetegory
+     if(isset($_GET['category'])){
+          $category = $_GET['category'];
+          //Create Query
+          $query = "SELECT * FROM posts WHERE category= ". $category;
+          //Run the Query
+          $posts = $db->select($query);
+     }else {
+          //Create Query
+          $query = "SELECT * FROM posts";
+          //Run the Query
+          $posts = $db->select($query);
+     }
+
+     //Create query
+     $query = "SELECT * FROM categories";
+     //Run the query
+     $categories = $db->select($query);
+?>
+
+<?php if($posts) : ?>
+          <?php while($row = $posts->fetch_assoc()) : ?>
           <div class="blog-post">
-            <h2 class="blog-post-title">Top PHP Tools</h2>
-            <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+            <h2 class="blog-post-title"><?php echo $row['title'] ;?></h2>
+            <p class="blog-post-meta"><?php echo formatDate($row['date']); ?> by <a href="#"><?php echo $row['author']; ?></a></p>
 
-           <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            <a  class="readmore" href="post.php?id=1">Read More</a>
+           <?php echo shortenText($row['body']) ;?>
+            <a  class="readmore" href="post.php?id=<?php echo urlencode($row['id']);?>">Read More</a>
           </div><!-- /.blog-post -->
+<?php endwhile;?>
 
-          <div class="blog-post">
-            <h2 class="blog-post-title">PHP Environment</h2>
-            <p class="blog-post-meta">December 23, 2013 by <a href="#">Jacob</a></p>
 
-            <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-             <a  class="readmore" href="post.php?id=1">Read More</a>
-          </div><!-- /.blog-post -->
-
-          <div class="blog-post">
-            <h2 class="blog-post-title">PHP Jobs</h2>
-            <p class="blog-post-meta">December 14, 2013 by <a href="#">Chris</a></p>
-
-            <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-
-            <a  class="readmore" href="post.php?id=1">Read More</a>
-          </div><!-- /.blog-post -->
+<?php else : ?>
+     <p>There are no posts yet </p>
+<?php  endif;?>
 <?php include 'includes/footer.php'; ?>
