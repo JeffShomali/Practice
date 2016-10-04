@@ -12,9 +12,34 @@
 
 
 ?>
+<?php
+     if(isset($_POST['submit'])) {
+          // Assign variable
+          $name  = mysqli_real_escape_string($db->link, $_POST['name']);
 
-<form>
-  <div class="form-group" method="post" action="edit_category.php">
+          // Simple Validation
+          if($name == ''){
+               //set an error
+               $error = "Plase fill out all required fields";
+          }else {
+               $query = "UPDATE categories SET
+                         name = '$name'
+                         WHERE id =".$id;
+               $update_row = $db->update($query);
+          }
+
+     }
+?>
+<?php
+     if(isset($_POST['delete'])) {
+          $query = "DELETE FROM categories WHERE id= ".$id;
+          $delete_row = $db->delete($query);
+
+     }
+?>
+
+<form method="post" action="edit_category.php?id=<?php echo $id; ?>">
+  <div class="form-group">
     <label>Category Name</label>
     <input name="name" type="text" class="form-control"  placeholder="Enter Category" value="<?php echo $category['name']; ?>">
   </div>

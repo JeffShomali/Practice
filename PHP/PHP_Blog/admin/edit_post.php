@@ -13,8 +13,44 @@
      $query = "SELECT * FROM categories";
      //Run the query
      $categories = $db->select($query);
+
+
 ?>
-<form role="form" mehtod="post" action="edit_post.php">
+
+<?php
+     if(isset($_POST['submit'])) {
+          // Assign variable
+          $title    = mysqli_real_escape_string($db->link, $_POST['title']);
+          $body     = mysqli_real_escape_string($db->link, $_POST['body']);
+          $category = mysqli_real_escape_string($db->link, $_POST['category']);
+          $author   = mysqli_real_escape_string($db->link, $_POST['author']);
+          $tags     = mysqli_real_escape_string($db->link, $_POST['tags']);
+
+          // Simple Validation
+          if($title == '' || $body == '' || $category == " " || $author == ""){
+               //set an error
+               $error = "Plase fill out all required fields";
+          }else {
+               $query = "UPDATE posts SET
+                         title = '$title',
+                         body = '$body',
+                         category = '$category',
+                         author = '$author',
+                         tags = '$tags'
+                         WHERE id =".$id;
+               $update_row = $db->update($query);
+          }
+
+     }
+?>
+<?php
+     if(isset($_POST['delete'])) {
+          $query = "DELETE FROM posts WHERE id= ".$id;
+          $delete_row = $db->delete($query);
+
+     }
+?>
+<form role="form" method="post" action="edit_post.php?id=<?php echo $id; ?>">
   <div class="form-group">
     <label>Post Title</label>
     <input name="title" type="text" class="form-control" placeholder="Enter Title" value="<?php echo $post['title'];?>">
@@ -33,7 +69,7 @@
                     $selected = '';
                }
                ?>
-               <option <?php echo $selected; ?>> <?php echo $row['name']; ?> </option>
+               <option <?php echo $selected; ?> value="<?php echo $row['id']; ?>" > <?php echo $row['name']; ?> </option>
          <?php endwhile;?>
      </select>
   </div>
