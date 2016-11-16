@@ -1,12 +1,16 @@
 <?php
+namespace Core;
 
 /**
  * Router
+ *
  * This is responsible to decide which controller should CallbackFilterIterator
  * and load, Match URLs to controllers and actions
  * This router decides which controller and action to run on the route
+ *
  * Ex: www.myWebsite.com/posts?page=2.
  */
+
 class Router
 {
     /**
@@ -122,6 +126,7 @@ class Router
        if ($this->match($url)) {
            $controller = $this->params['controller'];
            $controller = $this->convertToStudlyCaps($controller);
+           $controller = "App\Controllers\\$controller";
 
            if (class_exists($controller)) {
                $controller_object = new $controller();

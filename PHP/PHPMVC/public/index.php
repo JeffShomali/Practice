@@ -8,11 +8,22 @@
 
  // echo 'Request URL = "' .$_SERVER['QUERY_STRING']. '"' . '<br>';
 
-// Require the controller clss
-require '../App/Controllers/Posts.php';
+// Require the controller classes
+//require '../App/Controllers/Posts.php';
+//require '../Core/Router.php';
 
-require '../Core/Router.php';
-$router =  new Router();
+/**
+ * Autoloading  the controller classes
+ */
+spl_autoload_register(function ($class){
+     $root = dirname(__DIR__); // get the parent directory
+     $file = $root . '/' . str_replace('\\', '/', $class) . '.php';
+     if(is_readable($file)){
+          require $root . '/' . str_replace('\\', '/', $class) . '.php';
+     }
+});
+
+$router =  new Core\Router();
 
 // echo get_class($router);
 // Add the routes  to Router
