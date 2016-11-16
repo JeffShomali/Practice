@@ -3,65 +3,111 @@
 /**
  * Router
  * This is responsible to decide which controller should CallbackFilterIterator
- * and load
+ * and load, Match URLs to controllers and actions
  * This router decides which controller and action to run on the route
- * Ex: www.myWebsite.com/posts?page=2
+ * Ex: www.myWebsite.com/posts?page=2.
  */
-class Router {
-     /**
-      * Accociative array of routes (routing table)
+class Router
+{
+    /**
+      * Accociative array of routes (routing table).
+      *
       * @var array
       */
      protected $routes = [];
 
      /**
-      * Parameters from the matched route
+      * Parameters from the matched route.
+      *
       * @var array
       */
      protected $params = [];
 
-     /**
-      * Add a route to the routing table
-      *
-      * @param string $route  the route URL
-      * @param array  $params Parametes (controller, action, etc.)
-      */
-     public function add($route, $params)
-     {
-          $this->routes[$route] = $params;
-     }
+      /**
+       * Add a route to the routing table.
+       *
+       * @param string $route  the route URL
+       * @param array  $params Parametes (controller, action, etc.)
+       */
+      public function add($route, $params = [])
+      {
+          // Convert the route to a regular expression: escape forward slashes
+        $route = preg_replace('/\//', '\\/', $route);
 
-     public function getRoutes()
-     {
-          return $this->routes;
-     }
+
+        // Convert variables e.g. {controller}
+        $route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z-]+)', $route);
+
+        // Convert variables with custom regular expressions e.g. {id:\d+}
+       $route = preg_replace('/\{([a-z]+):([^\}]+)\}/', '(?P<\1>\2)', $route);
+       
+        // Add start and end delimiters, and case insensitive flag
+        $route = '/^'.$route.'$/i';
+
+          $this->routes[$route] = $params;
+      }
+
+    /**
+     * Get all the routes from the routing table.
+     *
+     * @return array
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
+    }
 
      /**
       * Match the route to the routes in the routing table
       * setting property if a route is found.
       *
       * @param  string $url The route URL
-      * @return boolean      True if a match found, false otherwise
+      *
+      * @return bool     True if a match found, false otherwise
       */
      public function match($url)
      {
-          foreach ($this->routes as $route => $params) {
-               if($url == $route) {
+         /*
+          foreach ($this->routes as $route => $params)
+          {
+               if($url == $route)
+               {
                     $this->params = $params;
                     return true;
                }
           }
-          return false;
+          */
+
+         // Match to the fixed URl format /controller/action
+         // $req_exp = "/^(?P<controller>[a-z-]+)\/(?P<action>[a-z-]+)$/";
+
+         //Lookig for matching incoming url
+         foreach ($this->routes as $route => $params) {
+            if (preg_match($route, $url, $matches)) {
+                // Get named capture group values
+                //$params = [];
+
+                foreach ($matches as $key => $match) {
+                    if (is_string($key)) {
+                        $params[$key] = $match;
+                    }
+                }
+
+                $this->params = $params;
+                return true;
+            }
+        }
+
+        return false;
      }
 
      /**
-      * Get the currently matched paramaeters
+      * Get the currently matched paramaeters.
+      *
       * @return array
       */
      public function getParams()
      {
-          return $this->params;
+         return $this->params;
      }
-
-
 }
