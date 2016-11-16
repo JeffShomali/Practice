@@ -8,6 +8,9 @@
 
  // echo 'Request URL = "' .$_SERVER['QUERY_STRING']. '"' . '<br>';
 
+// Require the controller clss
+require '../App/Controllers/Posts.php';
+
 require '../Core/Router.php';
 $router =  new Router();
 
@@ -21,6 +24,7 @@ $router->add('{controller}/{action}');
 // $router->add('admin/{action}/{controller}');
 $router->add('{controller}/{id:\d+}/{action}');
 
+/*
 // Display the routing table
 echo '<pre>';
 //var_dump($router->getRoutes());
@@ -37,3 +41,5 @@ if($router->match($url)) {
 }else {
      echo "No route found for URL '$url'";
 }
+*/
+$router->dispatch($_SERVER['QUERY_STRING']);
