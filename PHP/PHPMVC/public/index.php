@@ -23,6 +23,10 @@ spl_autoload_register(function ($class){
      }
 });
 
+/**
+ * Routing
+ * this is same as require '../Core/Router.php';
+ */
 $router =  new Core\Router();
 
 // echo get_class($router);
@@ -34,6 +38,7 @@ $router->add('posts',       ['controller' => 'Posts', 'action' => 'index']);
 $router->add('{controller}/{action}');
 // $router->add('admin/{action}/{controller}');
 $router->add('{controller}/{id:\d+}/{action}');
+$router->add('admin/{controller}/{action}', ['namespace' => 'Admin']);
 
 /*
 // Display the routing table
