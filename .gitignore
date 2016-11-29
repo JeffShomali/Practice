@@ -11,6 +11,8 @@ iOS_Swift/MyPlayground.playground/Contents.swift
 
 React & Flux/GithubDevelopers/node_modules/
 React & Flux/IMDBfinder/node_modules/
+React & Flux/ContactList/node_modules/
+
 
 
 Node/IntroToExpress/FirstExpressApp/node_modules
@@ -23,3 +25,6 @@ Node/JeffNote.md
 PHP/WordpressPlugin/
 PHP/PHPForum/
 PHP/WP_Contact/
+
+
+React & Flux/React_Quiz/
