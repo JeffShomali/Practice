@@ -39,3 +39,7 @@
 1. *Accessing* passed form values by using `getInitialState()` its similar to getDefaultProps, but instead of using this.props.name in component/render function we should use `this.state.name` to fetch the value.
 2. Then use `this.setState({})` to update initiated props value and render parts of component.
 3. Clear the form after submitted by adding `this.refs.name.value = '';` into event handeling function.
+
+###### Nested Component
+1. Create another component like level one
+2. Pass it into the main app component (`App.jsx render`) method

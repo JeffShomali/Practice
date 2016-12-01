@@ -1,5 +1,26 @@
+var GreeterMessage = React.createClass({
+     render: function() {
+          return (
+               <div>
+                    <h1>Some H1</h1>
+                    <p>Some paragraph</p>
+               </div>
+          );
+     }
+});
 
-var Greater = React.createClass({
+var GreeterForm = React.createClass({
+     render: function() {
+          return(
+               <form>
+                    <input type="text"/>
+                    <button>Second Form </button>
+               </form>
+          );
+     }
+});
+
+var Greeter = React.createClass({
      getDefaultProps: function (){
           return {
                name: "Name props not passed",
@@ -32,15 +53,19 @@ var Greater = React.createClass({
      render: function(){
           var name = this.state.name;
           var message =  this.props.message;
+
           return (
                <div>
                     <h1>Hello {name}!</h1>
                     <p> {message + " !!"}</p>
+               <GreeterMessage/>
 
                <form onSubmit={this.onButtonClick}>
                     <input type="text" ref="name"/>
                     <button>Set Name</button>
                </form>
+               <GreeterForm/>
+
                </div>
           );
      }
@@ -50,6 +75,6 @@ var name = "Jeff";
 var message  = "This is messsage from a components"
 
 ReactDOM.render(
-     <Greater name={name} message={message}/>,
+     <Greeter name={name} message={message}/>,
      document.getElementById('app')
 );
