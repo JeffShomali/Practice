@@ -38,10 +38,24 @@
 
 1. *Accessing* passed form values by using `getInitialState()` its similar to getDefaultProps, but instead of using this.props.name in component/render function we should use `this.state.name` to fetch the value.
 2. Then use `this.setState({})` to update initiated props value and render parts of component.
-3. Clear the form after submitted by adding `this.refs.name.value = '';` into event handeling function.
+3. Clear the form after submitted by adding `this.refs.name.value = '';` into event handling function.
 
 ###### Nested Component
 1. Create another component like level one
 2. Pass it into the main app component (`App.jsx render`) method
 3. Passing form value to another component:
 - add event handler on form component like `<form onSubmit={this.onFormSubmit}>` then access to data inside created function, int his case `onFormSubmit: function (e){}` then validate data and lastly passing into parent component handling method in this case `handleNewName` and use `setState` to change the props value.
+
+# Section 4
+
+###### Webpack
+*Why Webpack ?*
+- Issue:
+     1. inside `head` tag of `index.html`, browser need to request a lots of third party dependencies, so increase time to load the requests. In other way we could use `npm`
+     2. Inside `app.jsx` we use a lot of jsx and es6 feature and convert them into regular javascript live inside the browser, so this makes a lot of time consuming.
+     3. We can seprate the components into different files
+
+- Install Webpack:
+     1. Install webpack globally: `sudo npm install -g webpack@1.12.13`. Test it `webpack -h`
+     2. Install react and react-dom  *dependencies* (our things we want when we run on production) into project's package.json: `npm install --save react@0.14.7 react-dom@0.14.7`
+     3. Install webpack, babel, babel loader, babel preset, and babel preset react *dev dependencies* (only for local development) into project package.json: `npm install --save-dev webpack@1.12.13 babel-core@6.5.1 babel-loader@6.2.2 babel-preset-es2015@6.5.0 babel-preset-react@6.5.0` .Basically we tel npm not install this in other machine.
