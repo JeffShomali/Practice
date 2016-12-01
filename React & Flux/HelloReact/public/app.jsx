@@ -1,30 +1,47 @@
+
 var GreeterMessage = React.createClass({
      render: function() {
+          var name = this.props.name;
+          var message = this.props.message;
           return (
                <div>
-                    <h1>Some H1</h1>
-                    <p>Some paragraph</p>
+                    <h1>Hello {name}!</h1>
+                    <p>{message}</p>
                </div>
           );
      }
 });
 
+
 var GreeterForm = React.createClass({
+     onFormSubmit: function (e) {
+          e.preventDefault();
+
+          var name = this.refs.name.value;
+
+          if(name.length > 0){
+               this.refs.name.value = '';
+               this.props.onNewName(name);
+          }
+     },
+
      render: function() {
           return(
-               <form>
-                    <input type="text"/>
+               <form onSubmit={this.onFormSubmit}>
+                    <input type="text" ref="name"/>
                     <button>Second Form </button>
                </form>
           );
      }
 });
 
+
+
 var Greeter = React.createClass({
      getDefaultProps: function (){
           return {
-               name: "Name props not passed",
-               message: "Message props not passed"
+               name: "Default name",
+               message: "Default message"
           };
      },
 
@@ -34,18 +51,10 @@ var Greeter = React.createClass({
           };
      },
 
-     onButtonClick: function (e){
-          e.preventDefault();
-
-          var nameRef = this.refs.name;
-          var name = nameRef.value;
-          nameRef.value = '';
-
-          if(typeof name == 'string' && name.length > 0) {
-               this.setState({
-                    name: name
-               });
-          }
+     handleNewName: function (name){
+          this.setState({
+               name: name
+          });
      },
 
 
@@ -56,25 +65,15 @@ var Greeter = React.createClass({
 
           return (
                <div>
-                    <h1>Hello {name}!</h1>
-                    <p> {message + " !!"}</p>
-               <GreeterMessage/>
-
-               <form onSubmit={this.onButtonClick}>
-                    <input type="text" ref="name"/>
-                    <button>Set Name</button>
-               </form>
-               <GreeterForm/>
-
+               <GreeterMessage name={name} message={message}/>
+               <GreeterForm onNewName={this.handleNewName}/>
                </div>
           );
      }
 });
 
-var name = "Jeff";
-var message  = "This is messsage from a components"
 
 ReactDOM.render(
-     <Greeter name={name} message={message}/>,
+     <Greeter />,
      document.getElementById('app')
 );

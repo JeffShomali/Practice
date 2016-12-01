@@ -43,3 +43,5 @@
 ###### Nested Component
 1. Create another component like level one
 2. Pass it into the main app component (`App.jsx render`) method
+3. Passing form value to another component:
+- add event handler on form component like `<form onSubmit={this.onFormSubmit}>` then access to data inside created function, int his case `onFormSubmit: function (e){}` then validate data and lastly passing into parent component handling method in this case `handleNewName` and use `setState` to change the props value.
