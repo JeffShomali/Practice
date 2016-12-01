@@ -59,3 +59,10 @@
      1. Install webpack globally: `sudo npm install -g webpack@1.12.13`. Test it `webpack -h`
      2. Install react and react-dom  *dependencies* (our things we want when we run on production) into project's package.json: `npm install --save react@0.14.7 react-dom@0.14.7`
      3. Install webpack, babel, babel loader, babel preset, and babel preset react *dev dependencies* (only for local development) into project package.json: `npm install --save-dev webpack@1.12.13 babel-core@6.5.1 babel-loader@6.2.2 babel-preset-es2015@6.5.0 babel-preset-react@6.5.0` .Basically we tel npm not install this in other machine.
+- Generating Our Bundle (Seperate components)
+     1. First remove the script requests from index.html and rename `<script type="text/babel" src="app.jsx"></script>` into `<script src="bundle.js"></script>`. bundle.js created by webpack.
+     2. Create `app.js` inside public diroctery and add some vanilla JS function.
+     3. Run webpack: `webpack ./public/app.js ./public/bundle.js`
+     4. Create components folder in public directory and create `AnyComponents.js` file and export it with `module.exports`
+     5. Imported into app.js file with `require()` method.
+     6. Run webpack again (step 3) and run the server again
