@@ -66,3 +66,6 @@
      4. Create components folder in public directory and create `AnyComponents.js` file and export it with `module.exports`
      5. Imported into app.js file with `require()` method.
      6. Run webpack again (step 3) and run the server again
+- webpack config
+     1. Creating `webpack.config.js`file in root and use entry and output methods to configure webpack server.
+     2. Run the server on terminal with `webpack`
