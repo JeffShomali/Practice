@@ -66,6 +66,9 @@
      4. Create components folder in public directory and create `AnyComponents.js` file and export it with `module.exports`
      5. Imported into app.js file with `require()` method.
      6. Run webpack again (step 3) and run the server again
+
 - webpack config
      1. Creating `webpack.config.js`file in root and use entry and output methods to configure webpack server.
-     2. Run the server on terminal with `webpack`
+     2. Run the server on terminal with `webpack` and run local server with `node server.js` so all the components concat in one file that us `bundle.js`
+     3. *Adding Loaders:*  adding Babel loader & JSX Support to webpack config file. Basically, Babel loader takes our files parse them  to react and run them as ES2015.
+     4. Require `react` and `react-dom` in our application `App.jsx `.
