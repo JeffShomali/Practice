@@ -68,7 +68,10 @@
      6. Run webpack again (step 3) and run the server again
 
 - webpack config
+     React help us to modualize our application.
      1. Creating `webpack.config.js`file in root and use entry and output methods to configure webpack server.
      2. Run the server on terminal with `webpack` and run local server with `node server.js` so all the components concat in one file that us `bundle.js`
      3. *Adding Loaders:*  adding Babel loader & JSX Support to webpack config file. Basically, Babel loader takes our files parse them  to react and run them as ES2015.
      4. Require `react` and `react-dom` in our application `App.jsx `.
+     5. Adding default root with `root` and `alias` for require without specified path.
+     6. Run the `webpack -w` for listening to all changes and rebundle automatically, but need to run npm server.js in different terminal tab.
