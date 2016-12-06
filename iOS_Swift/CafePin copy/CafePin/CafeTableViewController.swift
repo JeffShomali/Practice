@@ -120,7 +120,7 @@ class CafeTableViewController: UITableViewController {
         }
         )
         
-        var deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete", handler: {(action: UITableViewRowAction, indexPath: IndexPath!)->Void in
+            let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete", handler: {(action: UITableViewRowAction, indexPath: IndexPath!)->Void in
             self.cafeNames.remove(at: indexPath.row)
             self.cafeLocations.remove(at: indexPath.row)
             self.cafeTypes.remove(at: indexPath.row)
