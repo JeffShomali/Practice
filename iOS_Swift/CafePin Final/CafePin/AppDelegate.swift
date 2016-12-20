@@ -12,10 +12,18 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        UINavigationBar.appearance().barTintColor = UIColor(red: 231/255, green: 95/255, blue: 53/255, alpha: 3.3)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        if let barFont = UIFont(name:"AvenirNextCondensed-DemiBold", size:22){
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white, NSFontAttributeName:barFont]
+        }
+        
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         return true
     }
 

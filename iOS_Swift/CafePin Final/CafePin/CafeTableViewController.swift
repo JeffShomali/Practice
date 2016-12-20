@@ -14,11 +14,11 @@ class CafeTableViewController: UITableViewController {
     var cafeTypes     = ["Coffee & Tea Shop", "Cafe", "Tea House", "Austrian / Causual Drink", "French", "Bakery", "Bakery", "Chocolate", "Cafe", "American / Seafood", "American", "American", "Breakfast & Brunch", "Coffee & Tea", "Coffee & Tea", "Latin American", "Spanish", "Spanish", "Spanish", "British", "Thai"]
     var cafeIsVisited = [Bool](repeating:false, count: 21)
     
-    
    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target:nil, action: nil)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -66,32 +66,7 @@ class CafeTableViewController: UITableViewController {
 
     
     
-   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //Create an option menu as an action sheet
-        let optionMenu = UIAlertController(title: nil, message: "Now What?", preferredStyle: .actionSheet)
-    
-        //Add actions to the menu
-        let isVisitedTitle = cafeIsVisited[indexPath.row] ? "Not been here": "Been Here"
-        //Add Visited Action
-        let isVisitedAction = UIAlertAction(title: isVisitedTitle, style: .default, handler: {
-        (action:UIAlertAction!)->Void in
-            let cell = tableView.cellForRow(at: indexPath) as! CustomTableViewCell
-            
-            self.cafeIsVisited[indexPath.row] = self.cafeIsVisited[indexPath.row] ? false : true
-            cell.favoriteImageView.isHidden  = !self.cafeIsVisited[indexPath.row]
-        })
-        //Add this action into our option menu
-        optionMenu.addAction(isVisitedAction)
-    
-        let cancelAction = UIAlertAction (title: "Cancel", style: .cancel, handler: nil)
-        optionMenu.addAction(cancelAction)
-    
-        //Display the Menu
-        self.present(optionMenu, animated: true, completion: nil)
-        tableView.deselectRow(at: indexPath, animated: false)
-        
-    }
-    
+       
     
     /*
     // Override to support conditional editing of the table view.
@@ -150,14 +125,25 @@ class CafeTableViewController: UITableViewController {
     }
     */
 
-    /*
+  
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "showCafeDetail" {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+               let destinationController = segue.destination as! DetailViewController
+                destinationController.cafeImage = self.cafeImages[indexPath.row]
+                destinationController.cafeName  = self.cafeNames[indexPath.row]
+                destinationController.cafeLocation = self.cafeLocations[indexPath.row]
+                destinationController.cafeType = self.cafeTypes[indexPath.row]
+                
+        }
     }
-    */
-
+    
 }
+    
+}//end
