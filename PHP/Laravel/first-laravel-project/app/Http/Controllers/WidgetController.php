@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Widget;
+use Redirect;
 
-class TestController extends Controller
+class WidgetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,11 +15,9 @@ class TestController extends Controller
      */
     public function index()
     {
-        $Beatles = ['John', 'Paul', 'George', 'Ringo'];
-          alert()->overlay('Listen', 'I hear Beatle music!', 'success');
-          // alert()->error('Problem', 'Cannot hear');
-        return view('test.index', compact('Beatles'));
+        $widgets = Widget::all();
 
+        return view('widget.index', compact('widgets'));
     }
 
     /**
@@ -28,23 +28,36 @@ class TestController extends Controller
     public function create()
     {
         //
+        return view('widget.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+     /**
+      * Store a newly created resource in storage.
+      *
+      * @param  \Illuminate\Http\Request  $request
+      *
+      * @return \Illuminate\Http\Response
+      */
+     public function store(Request $request)
+     {
+         //dd($request); //is like var_dump and die
+        $this->validate($request, [
+            'name' => 'required|unique:widgets|string|max:30',
+        ]);
+
+         $widget = Widget::create(['name' => $request->name]);
+         $widget->save();
+
+         alert()->success('Congrats!', 'You made a Widget');
+
+         return Redirect::route('widget.index');
+     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -55,7 +68,8 @@ class TestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -66,8 +80,9 @@ class TestController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -78,7 +93,8 @@ class TestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -11,9 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Auth route
+Auth::routes();
 
-// test route
-Route::get('test','TestController@index');
+// Home page route
+Route::get('/', 'PagesController@index');
+
+// Test route
+Route::get('test', 'TestController@index');
+
+// Widget route
+Route::resource('widget', 'WidgetController');
