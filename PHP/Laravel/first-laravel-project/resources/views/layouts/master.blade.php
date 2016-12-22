@@ -9,10 +9,12 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Theme Template for Bootstrap</title>
-
+    @yield('title')
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    @include('layouts.css')
+    
+    @yield('css')
+
 </head>
 
 <body role="document">
@@ -53,13 +55,22 @@
 
 <div class="container theme-showcase" role="main">
 
+
+
+
 @yield('content')
 
 
 
-</div> <!-- /container -->
 
-<script src="/js/app.js"></script>
+</div> <!-- /End Container -->
 
+
+
+
+<!-- JS Files -->
+@include('layouts.scripts')
+
+@yield('scripts')
 </body>
 </html>
