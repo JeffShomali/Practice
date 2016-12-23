@@ -14,6 +14,7 @@
 // Auth route
 Auth::routes();
 
+
 // Home page route
 Route::get('/', 'PagesController@index');
 
@@ -26,4 +27,7 @@ Route::get('widget/create', ['as' => 'widget.create',
 Route::get('widget/{id}-{slug?}', ['as' => 'widget.show',
             'uses' => 'WidgetController@show', ]);
 Route::resource('widget', 'WidgetController', ['except' => ['show', 'create']]);
+
+// Admin routes
 Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
+Route::get('terms-of-service', 'PagesController@terms');
