@@ -27,7 +27,9 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Date Created</th>
-                <th>Edit</th>
+                @if(Auth::user()->adminOrCurrentUserOwns($widget))
+                    <th>Edit</th>
+                @endif
                 <th>Delete</th>
 
             </tr>
@@ -39,12 +41,15 @@
                         {{ $widget->name }}</a></td>
                 <td>{{ $widget->created_at }}</td>
 
-                <td> <a href="/widget/{{ $widget->id }}/edit">
+                @if(Auth::user()->adminOrCurrentUserOwns($widget))
 
-                        <button type="button" class="btn btn-default">Edit</button></a></td>
+                    <td> <a href="/widget/{{ $widget->id }}/edit">
+
+                            <button type="button" class="btn btn-default">Edit</button></a></td>
+
+                @endif
 
                 <td>
-
                     <div class="form-group">
 
                         <form class="form" role="form" method="POST" action="{{ url('/widget/'. $widget->id) }}">
@@ -61,6 +66,8 @@
 
         </table>
 
+
+    </div>
 
 @endsection
 @section('scripts')

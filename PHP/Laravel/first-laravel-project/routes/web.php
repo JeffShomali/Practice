@@ -26,3 +26,4 @@ Route::get('widget/create', ['as' => 'widget.create',
 Route::get('widget/{id}-{slug?}', ['as' => 'widget.show',
             'uses' => 'WidgetController@show', ]);
 Route::resource('widget', 'WidgetController', ['except' => ['show', 'create']]);
+Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);

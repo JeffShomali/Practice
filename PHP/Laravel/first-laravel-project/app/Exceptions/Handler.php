@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Exceptions;
-
 use Exception;
+use App\Exceptions\NoActiveAccountException;
+use App\Exceptions\UnauthorizedException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
 class Handler extends ExceptionHandler
 {
     /**
@@ -25,7 +24,8 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param \Exception $exception
+     * @param  \Exception  $exception
+     * @return void
      */
     public function report(Exception $exception)
     {
@@ -34,18 +34,23 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Exception               $exception
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
     {
-        switch ($e) {
+        switch($e){
+            case ($e instanceof ModelNotFoundException):
+                return $this->renderException($e);
+                break;
+            case ($e instanceof NoActiveAccountException):
+                return $this->renderException($e);
+                break;
             case ($e instanceof NotFoundHttpException):
                 return $this->renderException($e);
                 break;
-            case ($e instanceof ModelNotFoundException):
+            case ($e instanceof UnauthorizedException):
                 return $this->renderException($e);
                 break;
             default:
@@ -54,12 +59,18 @@ class Handler extends ExceptionHandler
     }
     protected function renderException($e)
     {
-        switch ($e) {
+        switch ($e){
+            case ($e instanceof ModelNotFoundException):
+                return response()->view('errors.404', [], 404);
+                break;
+            case ($e instanceof NoActiveAccountException):
+                return response()->view('errors.no-active-account');
+                break;
             case ($e instanceof NotFoundHttpException):
                 return response()->view('errors.404', [], 404);
                 break;
-            case ($e instanceof ModelNotFoundException):
-                return response()->view('errors.404', [], 404);
+            case ($e instanceof UnauthorizedException):
+                return response()->view('errors.unauthorized');
                 break;
             default:
                 return (new SymfonyDisplayer(config('app.debug')))
@@ -69,9 +80,8 @@ class Handler extends ExceptionHandler
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
-     * @param \Illuminate\Http\Request                 $request
-     * @param \Illuminate\Auth\AuthenticationException $exception
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
      * @return \Illuminate\Http\Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
@@ -79,7 +89,6 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
-
         return redirect()->guest('login');
     }
 }
