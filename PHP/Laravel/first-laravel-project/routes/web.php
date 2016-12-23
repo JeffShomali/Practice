@@ -30,4 +30,7 @@ Route::resource('widget', 'WidgetController', ['except' => ['show', 'create']]);
 
 // Admin routes
 Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
+
+//Pages routes
 Route::get('terms-of-service', 'PagesController@terms');
+Route::get('privacy', 'PagesController@privacy');
