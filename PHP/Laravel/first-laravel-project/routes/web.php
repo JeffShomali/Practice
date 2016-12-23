@@ -20,5 +20,9 @@ Route::get('/', 'PagesController@index');
 // Test route
 Route::get('test', 'TestController@index');
 
-// Widget route
-Route::resource('widget', 'WidgetController');
+// Widget routes (p180)
+Route::get('widget/create', ['as' => 'widget.create',
+           'uses' => 'WidgetController@create', ]);
+Route::get('widget/{id}-{slug?}', ['as' => 'widget.show',
+            'uses' => 'WidgetController@show', ]);
+Route::resource('widget', 'WidgetController', ['except' => ['show', 'create']]);

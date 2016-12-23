@@ -26,4 +26,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function widgets()
+    {
+         //One user can have many widgets, so we use hasMany.
+        return $this->hasMany('App\Widget');
+    }
 }

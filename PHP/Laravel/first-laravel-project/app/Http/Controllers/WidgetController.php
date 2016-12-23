@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Widget;
 use Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class WidgetController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,78 +33,104 @@ class WidgetController extends Controller
      */
     public function create()
     {
-        //
         return view('widget.create');
     }
 
-     /**
-      * Store a newly created resource in storage.
-      *
-      * @param  \Illuminate\Http\Request  $request
-      *
-      * @return \Illuminate\Http\Response
-      */
-     public function store(Request $request)
-     {
-         //dd($request); //is like var_dump and die
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
         $this->validate($request, [
             'name' => 'required|unique:widgets|string|max:30',
         ]);
+        $slug = str_slug($request->name, '-');
+        $widget = Widget::create(['name' => $request->name,
+                                  'slug' => $slug,
+                                  'user_id' => Auth::id(), ]);
+        $widget->save();
+        alert()->success('Congrats!', 'You made a Widget');
 
-         $widget = Widget::create(['name' => $request->name]);
-         $widget->save();
+        return Redirect::route('widget.index');
+    }
 
-         alert()->success('Congrats!', 'You made a Widget');
+     /**
+      * Display the specified resource.
+      *
+      * @param int $id
+      *
+      * @return \Illuminate\Http\Response
+      */
+     public function show($id, $slug = '')
+     {
+         $widget = Widget::findOrFail($id);
 
-         return Redirect::route('widget.index');
+         if ($widget->slug !== $slug) {
+             return Redirect::route('widget.show', ['id' => $widget->id,
+                                                   'slug' => $widget->slug, ],
+                                                    301);
+         }
+
+         return view('widget.show', compact('widget'));
      }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+     /**
+      * Show the form for editing the specified resource.
+      *
+      * @param int $id
+      *
+      * @return \Illuminate\Http\Response
+      */
+     public function edit($id)
+     {
+         $widget = Widget::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+         return view('widget.edit', compact('widget'));
+     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+     /**
+      * Update the specified resource in storage.
+      *
+      * @param \Illuminate\Http\Request $request
+      * @param int                      $id
+      *
+      * @return \Illuminate\Http\Response
+      */
+     public function update(Request $request, $id)
+     {
+         $this->validate($request, [
+            'name' => 'required|string|max:40|unique:widgets,name,'.$id,
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+        ]);
+
+         $widget = Widget::findOrFail($id);
+
+     //     $slug = str_slug($request->widget_name, '-');
+             $slug = str_slug($request->name, "-");
+
+         $widget->update(['name' => $request->name,'slug' => $slug,'user_id' => Auth::id(), ]);
+
+         alert()->success('Congrats!', 'You updated a widget');
+
+         return Redirect::route('widget.show', ['widget' => $widget, 'slug' => $slug]);
+     }
+     /**
+      * Remove the specified resource from storage.
+      *
+      * @param int $id
+      *
+      * @return \Illuminate\Http\Response
+      */
+     public function destroy($id)
+     {
+         Widget::destroy($id);
+
+         alert()->overlay('Attention!', 'You deleted a widget', 'error');
+
+         return Redirect::route('widget.index');
+  }
 }
