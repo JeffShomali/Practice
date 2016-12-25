@@ -1,13 +1,9 @@
-@extends('layouts.master')
-
-@section('title')
-
-    <title>The Admin Page</title>
-
-    @endsection
+@extends('layouts.master') @section('title')
+   <title>The Admin Page</title>
+   @endsection
 
 @section('content')
+     <h1>Admin</h1> 
 
-    <h1>I Am Admin</h1>
-
-    @endsection
+@include('admin.grid')
+@endsection

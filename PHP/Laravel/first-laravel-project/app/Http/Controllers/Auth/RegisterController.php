@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\User;
 
 class RegisterController extends Controller
 {
@@ -46,6 +46,7 @@ class RegisterController extends Controller
       */
      protected function validator(array $data)
      {
+
          $data['is_subscribed'] = empty($data['is_subscribed']) ? 0 : 1;
          $data['terms'] = empty($data['terms']) ? 0 : 1;
 
@@ -69,11 +70,7 @@ class RegisterController extends Controller
      {
          $data['is_subscribed'] = empty($data['is_subscribed']) ? 0 : 1;
 
-         return User::create([
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'is_subscribed' => $data['is_subscribed'],
-        'password' => bcrypt($data['password']),
+         return User::create(['name' => $data['name'],'email' => $data['email'],'is_subscribed' => $data['is_subscribed'],'password' => bcrypt($data['password']),
     ]);
      }
 }

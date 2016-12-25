@@ -14,7 +14,6 @@
 // Auth route
 Auth::routes();
 
-
 // Home page route
 Route::get('/', 'PagesController@index');
 
@@ -34,3 +33,15 @@ Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
 //Pages routes
 Route::get('terms-of-service', 'PagesController@terms');
 Route::get('privacy', 'PagesController@privacy');
+
+// Profile routes
+Route::get('show-profile', ['as' => 'show-profile',
+           'uses' => 'ProfileController@showProfileToUser']);
+Route::get('my-profile', ['as' => 'my-profile',
+           'uses' => 'ProfileController@myProfile']);
+Route::resource('profile', 'ProfileController');
+
+// Setting  routes
+Route::get('settings', 'SettingsController@edit');
+Route::post('settings', ['as' => 'userUpdate',
+            'uses' => 'SettingsController@update']);

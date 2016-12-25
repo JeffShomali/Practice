@@ -180,7 +180,8 @@ return [
 
         // Jeff
         Creativeorange\Gravatar\GravatarServiceProvider::class,
-        Socieboy\Alerts\AlertServiceProvider::class
+        Socieboy\Alerts\AlertServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
     ],
 
     /*
@@ -231,6 +232,8 @@ return [
 
 
         'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

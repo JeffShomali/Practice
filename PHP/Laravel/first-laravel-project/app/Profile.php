@@ -1,0 +1,29 @@
+<?php
+
+namespace App;
+use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
+class Profile extends Model
+{
+    protected $fillable =['user_id',
+                          'first_name',
+                          'last_name',
+                          'birthdate',
+                          'gender'];
+
+    protected $dates = ['birthdate'];
+    public function showGender($gender)
+    {
+        return $gender == 1 ? 'Male' : 'Female';
+    }
+    public function fullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+    public function user()
+    {
+	    //One profile belongs to one user.
+        return $this->belongsTo('App\User');
+    }
+}

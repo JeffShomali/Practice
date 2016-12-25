@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Http\AuthTraits;
-
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 trait OwnsRecord
 {
     public function userNotOwnerOf($modelRecord)
     {
-     // returns the id of the currently logged in user
+        // returns the id of the currently logged in user
         return $modelRecord->user_id != Auth::id(); //
     }
     public function currentUserOwns($modelRecord)
@@ -23,5 +23,14 @@ trait OwnsRecord
         }
 
         return $modelRecord->user_id === Auth::id();
+    }
+
+    public function allowUserUpdate($user)
+    {
+        if (Auth::user()->isAdmin()) {
+            return true;
+        }
+
+        return $user->id === Auth::id();
     }
 }
